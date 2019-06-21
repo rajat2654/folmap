@@ -11,13 +11,22 @@ name = list(dd["NAME"])
 
 html = """<h4>Volcano info</h4>
 Name = 
-<a href="https://www.google.com/search?q==%%22%s%%22" target="_blank">%s</a><br>
+<a href="https://www.google.com/search?q=%s" target="_blank">%s</a><br>
 Height = %s m
 """
 
 for i in range(len(dd)):
-    ifr = folium.IFrame(html=html %(name[i], name[i], str(el[i])), height=100, width=200)
-    fg.add_child(folium.Marker(location=[s1[i], s2[i]], popup=folium.Popup(ifr), icon=folium.Icon(color="blue")))
+    ifr = folium.IFrame(html=html % (name[i], name[i], str(el[i])), height=100, width=200)
+    if el[i] < 1000:
+        col = "green"
+    elif el[i] < 2000:
+        col = "blue"
+    elif el[i]<3000:
+        col = "orange"
+    else:
+        col = "red"
+    fg.add_child(folium.CircleMarker(location=[s1[i], s2[i]], radius=5,
+    popup=folium.Popup(ifr), tooltip="hey", fill_color = col, color = "grey" , fillcapacity = 0.7))
 
 mapp.add_child(fg)
 
