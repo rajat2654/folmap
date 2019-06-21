@@ -25,8 +25,8 @@ for i in range(len(dd)):
         col = "orange"
     else:
         col = "red"
-    fg.add_child(folium.CircleMarker(location=[s1[i], s2[i]], radius=5,
-    popup=folium.Popup(ifr), tooltip="hey", fill_color = col, color = "grey" , fillcapacity = 0.7))
+    fg.add_child(folium.Marker(location=[s1[i], s2[i]],
+    popup=folium.Popup(ifr), icon=folium.Icon(color=col), tooltip= name[i]))
 
 mapp.add_child(fg)
 
