@@ -3,6 +3,7 @@ import pandas
 
 mapp = folium.Map(location=[38, -99], zoom_start=5)
 fg = folium.FeatureGroup(name="MYMAP")
+fg1 = folium.FeatureGroup(name="MYMAP1")
 dd = pandas.read_csv("Volcanoes.txt")
 s1 = list(dd["LAT"])
 s2 = list(dd["LON"])
@@ -28,6 +29,10 @@ for i in range(len(dd)):
     fg.add_child(folium.Marker(location=[s1[i], s2[i]],
     popup=folium.Popup(ifr), icon=folium.Icon(color=col), tooltip= name[i]))
 
-mapp.add_child(fg)
+fg1.add_child(folium.GeoJson(data=open("world.json", "r", encoding="utf-8-sig").read(),
+style_function = lambda x: {"fillColor":"red" if x["properties"]["POP2005"] < 1000000000 else "blue"}))
 
+mapp.add_child(fg)
+mapp.add_child(fg1)
+mapp.add_child(folium.LayerControl())
 mapp.save("map_advanced_html.html")
